@@ -1,13 +1,52 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import "./header.css"
+import { AuthContext } from "../../providers/AuthProvider";
+import axios from "axios";
+import { toast } from "react-toastify";
 const Header = () => {
+  const { user, logOut } = useContext(AuthContext);
+
+  const [dbuser, setDbuser] = useState(null);
+  useEffect(() => {
+    axios
+      .get(`https://b8a11-server-side-adnanalemran.vercel.app/user/${user?.uid}`)
+      .then((res) => {
+        setDbuser(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+      });
+  }, [user?.uid]);
+
+
+  const displayName = user?.displayName || dbuser?.displayName;
+  const displayPhotoURL =dbuser?.photoURL || user?.photoURL;
+
+  const handleSignOut = async () => {
+    try {
+      await logOut();
+      toast.info('You are just log out ', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+      
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const menu = (
     <>
       <li className="flex">
         <NavLink
           to="/"
-          className="flex items-center px-8 py-3 mb-1 font-semibold  "
+          className="flex items-center px-8 py-3 font-semibold  "
         >
           Home
         </NavLink>
@@ -15,15 +54,15 @@ const Header = () => {
       <li className="flex">
         <NavLink
           to="/All-Contest"
-          className="flex items-center px-8 py-3 mb-1 font-semibold  "
+          className="flex items-center px-8 py-3  font-semibold  "
         >
-          About
+         My task
         </NavLink>
       </li>
     </>
   );
   return (
-    <div className="bg-[#8981D7]">
+    <div className="bg-[#8981D7] ">
       <div className="navbar  text-white container mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
@@ -45,19 +84,23 @@ const Header = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow  rounded-box w-52 bg-[#8981D7]"
             >
            {menu}
             </ul>
           </div>
-          <a className="text-2xl font-bold">Click Task </a>
+          <Link to='/' className="text-2xl font-bold">Click Task </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 gap-2">
+          <ul className="menu menu-horizontal px-1 ">
           {menu}
           </ul>
         </div>
-        <div className="navbar-end">user inffo</div>
+        <div className="navbar-end">
+        <button className="btn" onClick={handleSignOut}>Log Out</button>
+          user inffo
+          
+          </div>
       </div>
     </div>
   );
