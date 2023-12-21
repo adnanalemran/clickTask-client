@@ -5,6 +5,9 @@ import Dashboard from "../layout/Dashboard/Dashboard";
 import SignIn from "../components/AuthComponets/SignIn";
 import SignUp from "../components/AuthComponets/SignUp";
 import PrivateRoute from "./PrivateRoute";
+
+import AllTask from "../layout/Dashboard/AllTask";
+import AddTask from "../layout/Dashboard/AddTask/AddTask";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -31,6 +34,16 @@ const router = createBrowserRouter([
         <Dashboard />
       </PrivateRoute>
     ),
+    children: [
+      {
+        path: "/Dashboard/task",
+        element: <AllTask />,
+      },
+      {
+        path: "/Dashboard/add-task",
+        element: <AddTask />,
+      },
+    ],
   },
 ]);
 export default router;

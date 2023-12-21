@@ -5,7 +5,15 @@ import { useContext } from "react";
 import Swal from "sweetalert2";
 
 const SignIn = () => {
-  // const { signIn } = useContext(AuthContext);
+  const { signIn } = useContext(AuthContext);
+  const showErrorAlert = (error) => {
+    Swal.fire({
+      icon: "error",
+      title: "login unsuccessful ",
+      text: "Email or password is incorrect.",
+    });
+  };
+
   const { googleSignIn } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
@@ -15,15 +23,39 @@ const SignIn = () => {
         console.log(result.user);
         navigate(location?.state ? location.state : "/");
       })
+
       .catch((error) => {
         console.log(error);
         Swal.fire({
           position: "top-end",
           icon: "error",
-          title: "login unsuccessful", 
+          title: "login unsuccessful",
           showConfirmButton: false,
           timer: 1500,
         });
+      });
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    console.log(e.currentTarget);
+    const form = new FormData(e.currentTarget);
+    const email = form.get("email");
+    const password = form.get("password");
+
+    signIn(email, password)
+      .then((result) => {
+        console.log(result);
+        navigate(location?.state ? location.state : "/");
+      })
+
+      .catch((error) => {
+        console.log(error);
+        if (error.code === "auth/invalid-login-credentials") {
+          showErrorAlert("Email or password is incorrect.");
+        } else {
+          showErrorAlert(error.message);
+        }
       });
   };
 
@@ -40,10 +72,7 @@ const SignIn = () => {
         <h1 className="text-2xl font-bold text-center pb-2  text-white">
           Sign In
         </h1>
-        <form
-          className="space-y-6 "
-          // onSubmit={handleLogin}
-        >
+        <form className="space-y-6 " onSubmit={handleLogin}>
           <div className="space-y-1 text-sm">
             <label className="block  text-white">Email</label>
             <input

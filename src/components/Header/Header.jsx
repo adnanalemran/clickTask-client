@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import "./header.css"
+import "./header.css";
 import { AuthContext } from "../../providers/AuthProvider";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -8,25 +8,27 @@ const Header = () => {
   const { user, logOut } = useContext(AuthContext);
 
   const [dbuser, setDbuser] = useState(null);
+  console.log(user?.uid);
   useEffect(() => {
     axios
-      .get(`https://b8a11-server-side-adnanalemran.vercel.app/user/${user?.uid}`)
+      .get(`http://localhost:5000/user/${user?.uid}`)
+
       .then((res) => {
         setDbuser(res.data);
+        console.log(res.data);
       })
       .catch((error) => {
         console.error("Error fetching user data:", error);
       });
   }, [user?.uid]);
 
-
   const displayName = user?.displayName || dbuser?.displayName;
-  const displayPhotoURL =dbuser?.photoURL || user?.photoURL;
-
+  const displayPhotoURL = dbuser?.photoURL || user?.photoURL;
+  console.log(displayName);
   const handleSignOut = async () => {
     try {
       await logOut();
-      toast.info('You are just log out ', {
+      toast.info("You are just log out ", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -35,8 +37,7 @@ const Header = () => {
         draggable: true,
         progress: undefined,
         theme: "colored",
-        });
-      
+      });
     } catch (error) {
       console.error(error);
     }
@@ -44,19 +45,16 @@ const Header = () => {
   const menu = (
     <>
       <li className="flex">
-        <NavLink
-          to="/"
-          className="flex items-center px-8 py-3 font-semibold  "
-        >
+        <NavLink to="/" className="flex items-center px-8 py-3 font-semibold  ">
           Home
         </NavLink>
       </li>
       <li className="flex">
         <NavLink
-          to="/All-Contest"
+          to="/Dashboard/task"
           className="flex items-center px-8 py-3  font-semibold  "
         >
-         My task
+          My task
         </NavLink>
       </li>
     </>
@@ -86,21 +84,52 @@ const Header = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow  rounded-box w-52 bg-[#8981D7]"
             >
-           {menu}
+              {menu}
             </ul>
           </div>
-          <Link to='/' className="text-2xl font-bold">Click Task </Link>
+          <Link to="/" className="text-2xl font-bold">
+            Click Task{" "}
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 ">
-          {menu}
-          </ul>
+          <ul className="menu menu-horizontal px-1 ">{menu}</ul>
         </div>
         <div className="navbar-end">
-        <button className="btn" onClick={handleSignOut}>Log Out</button>
-          user inffo
-          
-          </div>
+          {user ? (
+            <>
+              <ul className="menu menu-horizontal px-1 flex  items-center justify-center">
+                <li tabIndex={0}>
+               
+                    <summary>
+                      <label
+                        tabIndex={0}
+                        className="btn btn-ghost  btn-circle avatar"
+                      >
+                        <div className="w-10 rounded-full">
+                          <img src={displayPhotoURL} alt={displayName} />
+                        </div>
+                      </label>
+                      <p className="hidden md:grid">{displayName}</p>
+                    </summary>
+
+                
+                 
+                </li>
+                <li>
+                  <button onClick={handleSignOut}>Log Out</button>
+                </li>
+              </ul>
+            </>
+          ) : (
+            <>
+              <ul className="menu menu-horizontal px-1">
+                <li>
+                  <Link to="/login">Login</Link>
+                </li>
+              </ul>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
