@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Column from "../../components/Column";
 import { DragDropContext } from "react-beautiful-dnd";
-
+ 
 const MultiList = () => {
   const [state, setState] = useState(initialData);
 
