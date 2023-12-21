@@ -1,13 +1,82 @@
 import React, { useState } from "react";
 import Column from "../../components/Column";
 import { DragDropContext } from "react-beautiful-dnd";
- 
+
+const reorderColumnList = (sourceCol, startIndex, endIndex) => {
+  const newTaskIds = Array.from(sourceCol.taskIds);
+  const [removed] = newTaskIds.splice(startIndex, 1);
+
+  newTaskIds.splice(endIndex, 0, removed);
+
+  const newColumn = {
+    ...sourceCol,
+    taskIds: newTaskIds,
+  };
+
+  return newColumn;
+};
+
 const MultiList = () => {
   const [state, setState] = useState(initialData);
 
   const onDragEnd = (result) => {
     const { destination, source } = result;
-    // Handle drag and drop logic here
+
+    if (!destination) return;
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    const sourceCol = state.columns[source.droppableId];
+    const destinationCol = state.columns[destination.droppableId];
+
+    if (sourceCol.id === destinationCol.id) {
+      const newColumn = reorderColumnList(
+        sourceCol,
+        source.index,
+        destination.index
+      );
+
+      const newState = {
+        ...state,
+        columns: {
+          ...state.columns,
+          [newColumn.id]: newColumn,
+        },
+      };
+
+      setState(newState);
+
+      return;
+    }
+
+    const startTasks = Array.from(sourceCol.taskIds);
+    const [removed] = startTasks.splice(source.index, 1);
+    const newStartCol = {
+      ...sourceCol,
+      taskIds: startTasks,
+    };
+
+    const endTaskIds = Array.from(destinationCol.taskIds);
+    endTaskIds.splice(destination.index, 0, removed);
+    const newEndCol = {
+      ...destinationCol,
+      taskIds: endTaskIds,
+    };
+
+    const newState = {
+      ...state,
+      columns: {
+        ...state.columns,
+        [newStartCol.id]: newStartCol,
+        [newEndCol.id]: newEndCol,
+      },
+    };
+
+    setState(newState);
   };
 
   return (

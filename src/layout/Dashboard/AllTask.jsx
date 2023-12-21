@@ -38,7 +38,7 @@ const AllTask = () => {
 
           <div
             className={`fixed bottom-8 right-8 transition-all duration-300 ${
-              isSticky ? "bg-green-500 text-white " : ""
+              isSticky ? "  text-white " : ""
             }`}
           >
             <Link to="/Dashboard/add-task">
