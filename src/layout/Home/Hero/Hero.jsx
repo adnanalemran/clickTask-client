@@ -14,9 +14,10 @@ const Hero = () => {
             />
           </div>
           <div className="flex flex-col justify-center p-6 text-center rounded-sm lg:max-w-md xl:max-w-lg lg:text-left">
-            <h1 className="text-5xl font-bold">hello</h1>
+            <h1 className="text-5xl font-light">ONLINE TASK
+MANAGER</h1>
             <p className="mt-6 mb-8 text-lg sm:mb-12">
-              Dictum aliquam porta in condimentum ac integer
+            Organize and manage your team like a boss with click task, a free task management tool packing more capabilities than you can imagine.
               <br className="hidden md:inline lg:hidden" />
               turpis pulvinar, est scelerisque ligula sem
             </p>
