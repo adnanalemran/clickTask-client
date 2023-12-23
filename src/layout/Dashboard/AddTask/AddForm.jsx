@@ -8,7 +8,7 @@ const AddForm = () => {
           <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-gray-900">
             <div className="space-y-2 col-span-full lg:col-span-1">
               <p className="font-semibold text-3xl">Add Task</p>
-              <p className="text-xs">Adipisci fuga autem eum!</p>
+            
             </div>
             <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
               <div className="col-span-full sm:col-span-3">

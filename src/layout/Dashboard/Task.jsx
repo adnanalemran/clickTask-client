@@ -1,82 +1,139 @@
-import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import useAxiosPublic from "../../hook/useAxiosPublic";
 import { AuthContext } from "../../providers/AuthProvider";
+
+const StatusInput = ({ status, setStatus, taskId, axiosPublic }) => {
+  const handleStatusChange = async (newStatus) => {
+    try {
+      // Update the task status in the backend
+      await axiosPublic.patch(`/task/${taskId}`, { status: newStatus });
+      setStatus(newStatus);
+    } catch (error) {
+      console.error("Error updating task status:", error.message);
+      // Handle error, show a message, etc.
+    }
+  };
+
+  return (
+    <fieldset className="space-y-1 col-span-full w-60 dark:text-gray-100">
+      Status
+      <input
+        type="range"
+        required
+        className="w-full dark:accent-violet-400"
+        min="1"
+        max="3"
+        value={status}
+        onChange={(e) => handleStatusChange(parseInt(e.target.value))}
+      />
+      <div aria-hidden="true" className="flex justify-between px-1">
+        <span>Start</span>
+        <span>Ongoing</span>
+        <span>Completed</span>
+      </div>
+    </fieldset>
+  );
+};
 
 const Task = () => {
   const [tasks, setTasks] = useState([]);
   const { user } = useContext(AuthContext);
   const email = user?.email;
- 
+  const axiosPublic = useAxiosPublic();
+
+  const fetchTasks = async () => {
+    try {
+      const response = await axiosPublic.get(
+        `https://click-task-server.vercel.app/filtered-my-task?email=${email}`
+      );
+      setTasks(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:5000/filtered-my-task?email=${email}`
-        );  
-        setTasks(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+    fetchTasks();
+  }, [email, axiosPublic]);
+
+  const handleDeleteTask = async (task) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axiosPublic.delete(`/task/${task._id}`);
+          fetchTasks(); // Refetch tasks after deletion
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success",
+          });
+        } catch (error) {
+          console.error("Error deleting task:", error);
+          Swal.fire({
+            title: "Error",
+            text: `An error occurred while deleting the task: ${error.message}`,
+            icon: "error",
+          });
+        }
       }
-    };
-  
-    fetchData();
-  }, [email]); 
-  
+    });
+  };
 
   return (
-    <div className="  w-full">
+    <div className="w-full">
       <h1>Total Task {tasks.length} </h1>
 
       <hr className="my-5" />
       {tasks.map((task) => (
         <li
           key={task.id}
-          className="flex flex-col py-6 sm:flex-row sm:justify-between"
+          className="flex bg-base-300 p-4 m-2 flex-col py-6 sm:flex-row sm:justify-between"
         >
           <div className="flex w-full space-x-2 sm:space-x-4">
             <div className="flex flex-col justify-between w-full pb-4">
               <div className="flex justify-between w-full pb-2 space-x-2">
                 <div className="space-y-1">
-                  <h3 className=" w-full text-lg font-semibold   sm:pr-8">
+                  <h3 className="w-full text-lg font-semibold sm:pr-8">
                     {task?.taskName}
                   </h3>
-                  <p className="text-sm dark:text-gray-400">{task?.description}</p>
+                  <p className="text-sm dark:text-gray-400">
+                    {task?.description}
+                  </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-lg font-semibold"> Date : {task?.startDate}</p>
-                
+                  <p className="text-lg font-semibold">
+                    Date : {task?.startDate}
+                  </p>
                 </div>
               </div>
+
               <div className="flex text-sm divide-x">
+                <StatusInput
+                  status={task.status}
+                  setStatus={(newStatus) => {
+                    // No need to fetch tasks here
+                  }}
+                  taskId={task._id}
+                  axiosPublic={axiosPublic}
+                />
+              </div>
+
+              <div className="flex text-sm divide-x ">
                 <button
+                  onClick={() => handleDeleteTask(task)}
                   type="button"
                   className="flex items-center px-2 py-1 pl-0 space-x-1"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                    className="w-4 h-4 fill-current"
-                  >
-                    <path d="M96,472a23.82,23.82,0,0,0,23.579,24H392.421A23.82,23.82,0,0,0,416,472V152H96Zm32-288H384V464H128Z"></path>
-                    <rect width="32" height="200" x="168" y="216"></rect>
-                    <rect width="32" height="200" x="240" y="216"></rect>
-                    <rect width="32" height="200" x="312" y="216"></rect>
-                    <path d="M328,88V40c0-13.458-9.488-24-21.6-24H205.6C193.488,16,184,26.542,184,40V88H64v32H448V88ZM216,48h80V88H216Z"></path>
-                  </svg>
-                  <span>Remove</span>
-                </button>
-                <button
-                  type="button"
-                  className="flex items-center px-2 py-1 space-x-1"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                    className="w-4 h-4 fill-current"
-                  >
-                    <path d="M453.122,79.012a128,128,0,0,0-181.087.068l-15.511,15.7L241.142,79.114l-.1-.1a128,128,0,0,0-181.02,0l-6.91,6.91a128,128,0,0,0,0,181.019L235.485,449.314l20.595,21.578.491-.492.533.533L276.4,450.574,460.032,266.94a128.147,128.147,0,0,0,0-181.019ZM437.4,244.313,256.571,425.146,75.738,244.313a96,96,0,0,1,0-135.764l6.911-6.91a96,96,0,0,1,135.713-.051l38.093,38.787,38.274-38.736a96,96,0,0,1,135.765,0l6.91,6.909A96.11,96.11,0,0,1,437.4,244.313Z"></path>
-                  </svg>
-                  <span>Add to favorites</span>
+                  <span className="text-red-100 btn btn-primary btn-sm">Remove</span>
                 </button>
               </div>
             </div>

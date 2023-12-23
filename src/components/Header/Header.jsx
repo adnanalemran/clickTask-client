@@ -1,9 +1,9 @@
+import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import "./header.css";
-import { AuthContext } from "../../providers/AuthProvider";
-import axios from "axios";
 import { toast } from "react-toastify";
+import { AuthContext } from "../../providers/AuthProvider";
+import "./header.css";
 const Header = () => {
   const { user, logOut } = useContext(AuthContext);
 
@@ -11,7 +11,7 @@ const Header = () => {
   console.log(user?.uid);
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/user/${user?.uid}`)
+      .get(`https://click-task-server.vercel.app/user/${user?.uid}`)
 
       .then((res) => {
         setDbuser(res.data);
@@ -56,6 +56,14 @@ const Header = () => {
         >
           My task
         </NavLink>
+      </li>{" "}
+      <li className="flex">
+        <NavLink
+          to="/Dashboard/Taskdrop"
+          className="flex items-center px-8 py-3  font-semibold  "
+        >
+          task (Beta)
+        </NavLink>
       </li>
     </>
   );
@@ -99,21 +107,17 @@ const Header = () => {
             <>
               <ul className="menu menu-horizontal px-1 flex  items-center justify-center">
                 <li tabIndex={0}>
-               
-                    <summary>
-                      <label
-                        tabIndex={0}
-                        className="btn btn-ghost  btn-circle avatar"
-                      >
-                        <div className="w-10 rounded-full">
-                          <img src={displayPhotoURL} alt={displayName} />
-                        </div>
-                      </label>
-                      <p className="hidden md:grid">{displayName}</p>
-                    </summary>
-
-                
-                 
+                  <summary>
+                    <label
+                      tabIndex={0}
+                      className="btn btn-ghost  btn-circle avatar"
+                    >
+                      <div className="w-10 rounded-full">
+                        <img src={displayPhotoURL} alt={displayName} />
+                      </div>
+                    </label>
+                    <p className="hidden md:grid">{displayName}</p>
+                  </summary>
                 </li>
                 <li>
                   <button onClick={handleSignOut}>Log Out</button>
@@ -124,7 +128,7 @@ const Header = () => {
             <>
               <ul className="menu menu-horizontal px-1">
                 <li>
-                  <Link to="/login">Login</Link>
+                  <Link to="/signIn">Login</Link>
                 </li>
               </ul>
             </>

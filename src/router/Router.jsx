@@ -8,6 +8,7 @@ import PrivateRoute from "./PrivateRoute";
 
 import AllTask from "../layout/Dashboard/AllTask";
 import AddTask from "../layout/Dashboard/AddTask/AddTask";
+import Taskdrop from "../layout/Dashboard/Taskdrop";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -42,6 +43,9 @@ const router = createBrowserRouter([
       {
         path: "/Dashboard/add-task",
         element: <AddTask />,
+      },     {
+        path: "/Dashboard/Taskdrop",
+        element: <Taskdrop />,
       },
     ],
   },
