@@ -29,7 +29,7 @@ const AllTask = () => {
 
   return (
     <div>
-      <section className="p-6 dark:bg-gray-800 dark:text-gray-50">
+      <section className="p-6     ">
         <div className="container flex flex-col mx-auto space-y-12">
           {/*           
             <MultiList/> */}

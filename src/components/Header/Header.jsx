@@ -51,18 +51,18 @@ const Header = () => {
       </li>
       <li className="flex">
         <NavLink
+          to="/Dashboard/note"
+          className="flex items-center px-8 py-3  font-semibold  "
+        >
+         My Note
+        </NavLink>
+      </li>
+      <li className="flex">
+        <NavLink
           to="/Dashboard/task"
           className="flex items-center px-8 py-3  font-semibold  "
         >
-          My task
-        </NavLink>
-      </li>{" "}
-      <li className="flex">
-        <NavLink
-          to="/Dashboard/Taskdrop"
-          className="flex items-center px-8 py-3  font-semibold  "
-        >
-          task (Beta)
+          My Task
         </NavLink>
       </li>
     </>
@@ -96,7 +96,7 @@ const Header = () => {
             </ul>
           </div>
           <Link to="/" className="text-2xl font-bold">
-            Click Task{" "}
+            Click Task 
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
