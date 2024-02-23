@@ -150,10 +150,10 @@ const SignUp = () => {
         className="py-8  min-h-screen   "
       >
         <div className=" bg-[#8981D7] w-full  mx-auto max-w-md p-8 py-16 space-y-3 rounded-xl border my-5  ">
-          <h1 className="text-2xl font-bold text-center pb-2 ">Sign Up</h1>
+          <h1 className="text-2xl font-bold text-center pb-2 text-white ">Sign Up</h1>
           <form onSubmit={handleSignUp} className="space-y-6">
             <div className="space-y-1 text-sm">
-              <label className="block ">Your name</label>
+              <label className="block text-white ">Your name</label>
               <input
                 type="text"
                 name="displayName"
@@ -164,16 +164,16 @@ const SignUp = () => {
               />
             </div>
             <div className="space-y-1 text-sm">
-              <label className="block ">Your Photo Url</label>
+              <label className="block text-white">Your Photo </label>
               <input
                 type="file"
                 name="photoURL"
                 required
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5   "
+                className=" w-full bg-base-100  border px-4 py-3 rounded-md  "
               />
             </div>
             <div className="space-y-1 text-sm">
-              <label className="block  ">Email</label>
+              <label className="block  text-white">Email</label>
               <input
                 type="email"
                 name="email"
@@ -186,7 +186,7 @@ const SignUp = () => {
               />
             </div>
             <div className="space-y-1 text-sm">
-              <label className="block  ">Password</label>
+              <label className="block text-white ">Password</label>
               <div className="relative">
                 <input
                   value={password}
@@ -211,13 +211,13 @@ const SignUp = () => {
               )}
             </div>
 
-            <button    disabled={loading} className="block w-full p-3 text-center rounded-xl dark.text-gray-900 dark.bg-violet-400 btn btn-primary">
+            <button    disabled={loading} className="block w-full p-3 text-center rounded-xl dark.text-gray-900 dark.bg-violet-400 btn btn-success">
             {loading ? "processing your application" : "Sign up"}
 
             </button>
           </form>
 
-          <p className="text-sm text-center sm:px-6 dark:text-gray-400">
+          <p className="text-sm text-center sm:px-6 text-white">
             You have an account?
             <Link
               rel="noopener noreferrer"
