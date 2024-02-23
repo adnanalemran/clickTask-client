@@ -34,6 +34,8 @@ const AllTask = () => {
           {/*           
             <MultiList/> */}
           <Task/>
+
+
           <div
             className={`fixed bottom-8 right-8 transition-all duration-300 ${
               isSticky ? "  text-white " : ""
@@ -45,6 +47,9 @@ const AllTask = () => {
               </button>
             </Link>
           </div>
+
+
+          
         </div>
       </section>
     </div>

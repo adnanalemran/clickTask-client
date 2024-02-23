@@ -41,7 +41,7 @@ const AddTask = () => {
     }
 
     try {
-      const response = await fetch("https://click-task-server.vercel.app/task", {
+      const response = await fetch("http://localhost:5000/task", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -80,14 +80,14 @@ const AddTask = () => {
     <div>
       <section className="p-6 dark:bg-gray-800 dark:text-gray-50">
         <form className="container flex flex-col mx-auto space-y-12">
-          <fieldset className="flex flex-col lg:flex-row gap-6 p-6 rounded-md shadow-sm dark:bg-gray-900">
+          <fieldset className="flex flex-col lg:flex-row gap-6 p-6 rounded-md shadow-sm  backdrop-blur-sm bg-white/30">
             <div className="space-y-2 lg:w-4/12 w-full">
               <p className="font-semibold text-3xl">Add Task</p>
               <p className="text-xs">Adipisci fuga autem eum!</p>
             </div>
             <div className="lg:w-8/12 w-full grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
               <div className="col-span-full sm:col-span-3">
-                <label htmlFor="taskName" className="text-sm">
+                <label htmlFor="taskName" className="text-xl  ">
                   Task name:
                 </label>
                 <input
@@ -97,11 +97,11 @@ const AddTask = () => {
                   placeholder="Task name"
                   value={taskName}
                   onChange={(e) => setTaskName(e.target.value)}
-                  className="w-full rounded-md focus:ring focus:ring-indigo-500 focus:ring-opacity-50 dark:border-gray-700 dark:text-gray-900"
+                  className="w-full p-2 rounded-md  ring ring-indigo-200 focus:ring-indigo-500 focus:ring-opacity-50 mt-4  "
                 />
               </div>
               <div className="col-span-full sm:col-span-3">
-                <label htmlFor="startDate" className="text-sm">
+                <label htmlFor="startDate" className="text-xl">
                   Task Start date:
                 </label>
                 <input
@@ -111,11 +111,11 @@ const AddTask = () => {
                   placeholder="Task description"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="w-full rounded-md focus:ring focus:ring-indigo-500 focus:ring-opacity-50 dark:border-gray-700 dark:text-gray-900"
+                  className="w-full p-2 rounded-md  ring ring-indigo-200 focus:ring-indigo-500 focus:ring-opacity-50 mt-4"
                 />
               </div>
-              <fieldset className="space-y-1 col-span-full w-60 dark:text-gray-100">
-                status
+              <fieldset className="space-y-1 col-span-full w-60 dark:text-gray-100 ">
+              <p className="text-xl"> Status</p>  
                 <input
                   type="range"
                   required
@@ -132,7 +132,7 @@ const AddTask = () => {
                 </div>
               </fieldset>
               <div className="col-span-full">
-                <label htmlFor="description" className="text-sm">
+                <label htmlFor="description" className="text-xl">
                   Task details:
                 </label>
                 <textarea
@@ -141,7 +141,7 @@ const AddTask = () => {
                   placeholder="Task details"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full rounded-md focus:ring focus:ring-indigo-500 focus:ring-opacity-50 dark:border-gray-700 dark:text-gray-900"
+                  className="w-full p-2 rounded-md  ring ring-indigo-200 focus:ring-indigo-500 focus:ring-opacity-50 mt-4"
                   spellCheck="false"
                 ></textarea>
               </div>

@@ -11,7 +11,7 @@ const Header = () => {
   console.log(user?.uid);
   useEffect(() => {
     axios
-      .get(`https://click-task-server.vercel.app/user/${user?.uid}`)
+      .get(`http://localhost:5000/user/${user?.uid}`)
 
       .then((res) => {
         setDbuser(res.data);

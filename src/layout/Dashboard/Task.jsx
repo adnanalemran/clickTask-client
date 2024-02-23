@@ -45,7 +45,7 @@ const Task = () => {
   const fetchTasks = async () => {
     try {
       const response = await axiosPublic.get(
-        `https://click-task-server.vercel.app/filtered-my-task?email=${email}`
+        `http://localhost:5000/filtered-my-task?email=${email}`
       );
       setTasks(response.data);
     } catch (error) {
