@@ -1,10 +1,16 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../../providers/AuthProvider";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Swal from "sweetalert2";
 
 const SignIn = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+  
   const { signIn } = useContext(AuthContext);
   const showErrorAlert = (error) => {
     Swal.fire({
@@ -84,15 +90,27 @@ const SignIn = () => {
             />
           </div>
           <div className="space-y-1 text-sm">
-            <label className="block  text-white ">Password</label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Password"
-              className="w-full px-4 py-3 border rounded-md"
-            />
-          </div>
+              <label className="block text-white ">Password</label>
+              <div className="relative">
+                <input
+               
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  id="password"
+                  placeholder="Password"
+                  className="w-full px-4 border py-3 rounded-md  focus:dark-border-violet-400"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={toggleShowPassword}
+                  className="absolute top-1/2 right-4 transform -translate-y-1/2 focus:outline-none"
+                >
+                  {showPassword ? "Hide" : "Show"}
+                </button>
+              </div>
+               
+            </div>
           <button className="block w-full p-3 text-center rounded-xl   btn ">
             Sign in
           </button>
