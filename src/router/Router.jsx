@@ -8,7 +8,9 @@ import PrivateRoute from "./PrivateRoute";
 
 import AllTask from "../layout/Dashboard/AllTask";
 import AddTask from "../layout/Dashboard/AddTask/AddTask";
-import Taskdrop from "../layout/Dashboard/Taskdrop";
+import Note from "../layout/Dashboard/Note";
+import AllNote from "../layout/Dashboard/AllNote";
+ 
 const router = createBrowserRouter([
   {
     path: "/",
@@ -36,6 +38,7 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      // task releted 
       {
         path: "/Dashboard/task",
         element: <AllTask />,
@@ -43,10 +46,12 @@ const router = createBrowserRouter([
       {
         path: "/Dashboard/add-task",
         element: <AddTask />,
-      },     {
-        path: "/Dashboard/Taskdrop",
-        element: <Taskdrop />,
-      },
+      }, 
+      //note releted
+      {
+        path: "/Dashboard/note",
+        element: <AllNote />,
+      },     
     ],
   },
 ]);
