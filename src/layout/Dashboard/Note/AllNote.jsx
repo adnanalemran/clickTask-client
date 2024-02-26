@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Task from "./Task";
 import Note from "./Note";
  
 
@@ -37,7 +36,7 @@ const AllNote = () => {
 
 
           <div
-            className={`fixed bottom-8 right-8 transition-all duration-300 ${
+            className={`fixed bottom-8 right-8 transition-all duration-100 ${
               isSticky ? "  text-white " : ""
             }`}
           >

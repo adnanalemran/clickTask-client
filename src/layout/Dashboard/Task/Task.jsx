@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import useAxiosPublic from "../../hook/useAxiosPublic";
-import { AuthContext } from "../../providers/AuthProvider";
+import useAxiosPublic from "../../../hook/useAxiosPublic";
+import { AuthContext } from "../../../providers/AuthProvider";
 
 const StatusInput = ({ status, setStatus, taskId, axiosPublic }) => {
   const handleStatusChange = async (newStatus) => {

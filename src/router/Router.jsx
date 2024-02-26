@@ -1,15 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
-import Main from "../layout/Main";
-import Home from "../layout/Home/Home";
-import Dashboard from "../layout/Dashboard/Dashboard";
 import SignIn from "../components/AuthComponets/SignIn";
 import SignUp from "../components/AuthComponets/SignUp";
+import Dashboard from "../layout/Dashboard/Dashboard";
+import Home from "../layout/Home/Home";
+import Main from "../layout/Main";
 import PrivateRoute from "./PrivateRoute";
 
-import AllTask from "../layout/Dashboard/AllTask";
-import AddTask from "../layout/Dashboard/AddTask/AddTask";
-import Note from "../layout/Dashboard/Note";
-import AllNote from "../layout/Dashboard/AllNote";
+import AllNote from "../layout/Dashboard/Note/AllNote";
+import AddTask from "../layout/Dashboard/Task/AddTask";
+import AllTask from "../layout/Dashboard/Task/AllTask";
+ 
  
 const router = createBrowserRouter([
   {
